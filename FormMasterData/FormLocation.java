@@ -75,7 +75,7 @@ public class FormLocation extends JFrame {
 		
 	
 		JPanel panelHeader = new JPanel();
-		JLabel lblInfo = new JLabel("¢ÈÕ¡Ÿ≈»Ÿπ¬Ï©’¥ LO_DESC",SwingConstants.CENTER);
+		JLabel lblInfo = new JLabel("‡∏£‡∏≤‡∏¢‡∏•‡∏∞‡πÄ‡∏≠‡∏µ‡∏¢‡∏î‡∏®‡∏π‡∏ô‡∏¢‡πå",SwingConstants.CENTER);
 		panelHeader.add(lblInfo);
 		c.add(panelHeader);
 		
@@ -86,12 +86,12 @@ public class FormLocation extends JFrame {
 		JPanel panelInput = new JPanel(new GridLayout(2,1,10,10));
 		
 		
-		JLabel lblLO_ID = new JLabel(" ∂“π∑’Ë©’¥ LO_DESC");
+		JLabel lblLO_ID = new JLabel("‡∏£‡∏´‡∏±‡∏™‡∏®‡∏π‡∏ô‡∏¢‡πå LO_ID");
 		lo_id = new JTextField();
 		lo_id.setPreferredSize(new Dimension(200,30));
 
 	
-		JLabel lblLO_DESC = new JLabel(" ∂“π∑’Ë©’¥ LO_DESC");
+		JLabel lblLO_DESC = new JLabel("‡∏£‡∏≤‡∏¢‡∏•‡∏∞‡πÄ‡∏≠‡∏µ‡∏¢‡∏î LO_DESC");
 		lo_desc = new JTextField();
 		lo_desc.setPreferredSize(new Dimension(200,30));
 		
@@ -150,7 +150,7 @@ public class FormLocation extends JFrame {
 		
 
 		JPanel panelButton = new JPanel(new FlowLayout());	
-		btSave = new JButton("∫—π∑÷°");
+		btSave = new JButton("‡∏ö‡∏±‡∏ô‡∏ó‡∏∂‡∏Å");
 		btSave.setPreferredSize(new Dimension(100,40));
 		btSave.setForeground(Color.white);
 		btSave.setBackground(Color.green);
@@ -164,9 +164,9 @@ public class FormLocation extends JFrame {
 		}
 		);
 		
-		btEdit = new JButton("·°È‰¢");
+		btEdit = new JButton("‡πÅ‡∏Å‡πâ‡πÑ‡∏Ç");
 		btEdit.setPreferredSize(new Dimension(100,40));
-		btEdit.setForeground(Color.white);
+		btEdit.setForeground(Color.black);
 		btEdit.setBackground(Color.yellow);
 		btEdit.addActionListener(new ActionListener()
 		{
@@ -177,7 +177,7 @@ public class FormLocation extends JFrame {
 		}
 		);
 		
-		btDelete = new JButton("≈∫");
+		btDelete = new JButton("‡∏•‡∏ö");
 		btDelete.setPreferredSize(new Dimension(100,40));
 		btDelete.setForeground(Color.white);
 		btDelete.setBackground(Color.red);
@@ -219,7 +219,7 @@ public class FormLocation extends JFrame {
 				{null,null,null}
 		};
 		
-		String header [] = {"√À— »Ÿπ¬Ï","√“¬≈–‡Õ’¬¥","Active"};
+		String header [] = {"‡∏£‡∏´‡∏±‡∏™‡∏®‡∏π‡∏ô‡∏¢‡πå","‡∏£‡∏≤‡∏¢‡∏•‡∏∞‡πÄ‡∏≠‡∏µ‡∏¢‡∏î","Active"};
 		
 		modelLocation = new DefaultTableModel(data,header) {
 			public boolean isCellEditable(int row,int columns) {
@@ -325,8 +325,8 @@ public class FormLocation extends JFrame {
 		if(lo_id.getText().trim() == "") {
 			JOptionPane.showMessageDialog(
 					this,
-					"°√ÿ≥“°√Õ°¢ÈÕ¡Ÿ≈",
-					"º≈°√∑”ß“π",
+					"‡∏£‡∏∞‡∏ö‡∏∏‡∏£‡∏´‡∏±‡∏™",
+					"‡∏ú‡∏•‡∏Å‡∏≤‡∏£‡∏ó‡∏≥‡∏á‡∏≤‡∏ô",
 					JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
@@ -340,8 +340,8 @@ public class FormLocation extends JFrame {
 		if(pre.executeUpdate() != -1) {
 			JOptionPane.showMessageDialog(
 					this,
-					"∫—π∑÷°¢ÈÕ¡Ÿ≈‡√’¬∫√ÈÕ¬·≈È«",
-					"º≈°√∑”ß“π",
+					"‡∏ö‡∏±‡∏ô‡∏ó‡∏∂‡∏Å‡πÄ‡∏£‡∏µ‡∏¢‡∏ö‡∏£‡πâ‡∏≠‡∏¢",
+					"‡∏ú‡∏•‡∏Å‡∏≤‡∏£‡∏ó‡∏≥‡∏á‡∏≤‡∏ô",
 					JOptionPane.INFORMATION_MESSAGE
 					);
 			showData();
@@ -373,8 +373,8 @@ public class FormLocation extends JFrame {
 			if(pre.executeUpdate() != -1) {
 				JOptionPane.showMessageDialog(
 					this,
-					"Õ—æ‡¥∑¢ÈÕ¡Ÿ≈ ”‡√Á®·≈È«",
-					"º≈°√∑”ß“π",
+					"‡πÅ‡∏Å‡πâ‡πÑ‡∏Ç‡πÄ‡∏£‡∏µ‡∏¢‡∏ö‡∏£‡πâ‡∏≠‡∏¢",
+					"‡∏ú‡∏•‡∏Å‡∏≤‡∏£‡∏ó‡∏≥‡∏á‡∏≤‡∏ô",
 					JOptionPane.INFORMATION_MESSAGE
 					);
 				showData();
@@ -401,8 +401,8 @@ public class FormLocation extends JFrame {
 		if(pre.executeUpdate() != -1) {
 			JOptionPane.showMessageDialog(
 					this,
-					"≈∫¢ÈÕ¡Ÿ≈‡√’¬∫√ÈÕ¬·≈È«",
-					"º≈°√∑”ß“π",
+					"‡∏•‡∏ö‡πÄ‡∏£‡∏µ‡∏¢‡∏ö‡∏£‡πâ‡∏≠‡∏¢",
+					"‡∏ú‡∏•‡∏Å‡∏≤‡∏£‡∏ó‡∏≥‡∏á‡∏≤‡∏ô",
 					JOptionPane.INFORMATION_MESSAGE
 					);
 			showData();

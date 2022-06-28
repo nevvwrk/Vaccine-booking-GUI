@@ -1,6 +1,4 @@
 package FormMasterData;
-
-
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -22,10 +20,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
+
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -42,18 +44,16 @@ import javax.swing.table.DefaultTableModel;
 
 import Booking.dbConnect;
 
-
-public class FormNeedle extends JFrame {
-	
-	Connection conn = dbConnect.getConnection();
+public class FormGender extends JFrame {
+Connection conn = dbConnect.getConnection();
 	JButton btSave,btEdit,btDelete,btSearch;
-	JTextField ne_id, ne_desc,  tfSearch;
+	JTextField ge_id, ge_desc,  tfSearch;
 	
 	
-	JTable tableNeedle;
-	DefaultTableModel modelNeedle;
+	JTable tableGender;
+	DefaultTableModel modelGender;
 	
-	public FormNeedle()
+	public FormGender()
 	{
 		if(conn != null) {
 			System.out.println("Database connected");
@@ -68,7 +68,7 @@ public class FormNeedle extends JFrame {
 		
 	
 		JPanel panelHeader = new JPanel();
-		JLabel lblInfo = new JLabel("รายละเอียดเข็ม",SwingConstants.CENTER);
+		JLabel lblInfo = new JLabel("��������´��",SwingConstants.CENTER);
 		panelHeader.add(lblInfo);
 		c.add(panelHeader);
 		
@@ -79,20 +79,21 @@ public class FormNeedle extends JFrame {
 		JPanel panelInput = new JPanel(new GridLayout(2,1,10,10));
 		
 		
-		JLabel lblNeId = new JLabel("รหัสเข็ม NE_ID");
-		ne_id = new JTextField();
-		ne_id.setPreferredSize(new Dimension(200,30));
+		JLabel lblge_id = new JLabel("�����ٹ�� ge_id");
+		ge_id = new JTextField();
+		ge_id.setPreferredSize(new Dimension(200,30));
 
 	
-		JLabel lblNeDesc = new JLabel("รายละเอียดเข็ม NE_DESC");
-		ne_desc = new JTextField();
-		ne_desc.setPreferredSize(new Dimension(200,30));
+		JLabel lblge_desc = new JLabel("��������´ ge_desc");
+		ge_desc = new JTextField();
+		ge_desc.setPreferredSize(new Dimension(200,30));
 		
 		
-		panelInput.add(lblNeId);
-		panelInput.add(ne_id);
-		panelInput.add(lblNeDesc);
-		panelInput.add(ne_desc);
+		
+		panelInput.add(lblge_id);
+		panelInput.add(ge_id);
+		panelInput.add(lblge_desc);
+		panelInput.add(ge_desc);
 		
 	
 		JPanel panelSearch = new JPanel();
@@ -133,7 +134,6 @@ public class FormNeedle extends JFrame {
 		});
 			
 		panelSearch.add(tfSearch);
-		
 
 		panelInsert.add(panelInput);
 		panelInsert.add(panelSearch);
@@ -143,7 +143,7 @@ public class FormNeedle extends JFrame {
 		
 
 		JPanel panelButton = new JPanel(new FlowLayout());	
-		btSave = new JButton("บันทึก");
+		btSave = new JButton("�ѹ�֡");
 		btSave.setPreferredSize(new Dimension(100,40));
 		btSave.setForeground(Color.white);
 		btSave.setBackground(Color.green);
@@ -157,7 +157,7 @@ public class FormNeedle extends JFrame {
 		}
 		);
 		
-		btEdit = new JButton("แก้ไข");
+		btEdit = new JButton("���");
 		btEdit.setPreferredSize(new Dimension(100,40));
 		btEdit.setForeground(Color.black);
 		btEdit.setBackground(Color.yellow);
@@ -170,7 +170,7 @@ public class FormNeedle extends JFrame {
 		}
 		);
 		
-		btDelete = new JButton("ลบ");
+		btDelete = new JButton("ź");
 		btDelete.setPreferredSize(new Dimension(100,40));
 		btDelete.setForeground(Color.white);
 		btDelete.setBackground(Color.red);
@@ -190,16 +190,17 @@ public class FormNeedle extends JFrame {
 		
 		JPanel panelTable = new JPanel();
 		JScrollPane scrollTable = new JScrollPane();
-		scrollTable.setPreferredSize(new Dimension(400,106));
+		scrollTable.setPreferredSize(new Dimension(750,106));
 		
-		tableNeedle = new JTable();
-		tableNeedle.addMouseListener(new MouseAdapter() {
+		tableGender = new JTable();
+		tableGender.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				int index = tableNeedle.getSelectedRow();
+				int index = tableGender.getSelectedRow();
 				btSave.setEnabled(true);
-				ne_id.setEditable(false);
-				ne_id.setText(tableNeedle.getValueAt(index, 0).toString());
-				ne_desc.setText(tableNeedle.getValueAt(index, 1).toString());
+				ge_id.setEditable(false);
+				ge_id.setText(tableGender.getValueAt(index, 0).toString());
+				ge_desc.setText(tableGender.getValueAt(index, 1).toString());
+				
 			}
 		});
 		
@@ -211,59 +212,58 @@ public class FormNeedle extends JFrame {
 				{null,null}
 		};
 		
-		String header [] = {"รหัสเข็ม","รายละเอียดเข็ม"};
+		String header [] = {"��������","��������´"};
 		
-		modelNeedle = new DefaultTableModel(data,header) {
+		modelGender = new DefaultTableModel(data,header) {
 			public boolean isCellEditable(int row,int columns) {
 				return false;
 			}
 		};
 		
-		tableNeedle.setModel(modelNeedle);
-		scrollTable.setViewportView(tableNeedle);
+		tableGender.setModel(modelGender);
+		scrollTable.setViewportView(tableGender);
 		panelTable.add(scrollTable);
 		
 		c.add(panelTable);
 
 		showData();
-	}
+}
+	
+	
 	
 	public void showData() {
-			
+		
+		
 		try {
-			int totalRow = tableNeedle.getRowCount()-1;
+			int totalRow = tableGender.getRowCount()-1;
 			
 			while(totalRow > -1) {
-				modelNeedle.removeRow(totalRow);
+				modelGender.removeRow(totalRow);
 				totalRow--;
 			}
 			
 			//String search is push value of tfSearch to String search
 			//.trim() is remove spacing on textField
 			
-			/*String search = tfSearch.getText().trim();
-			String SQL = "select * from needle"
-					//**where need spacing on front
-					+ " WHERE ne_id LIKE '%"+search+"%' OR"
-					+ " ne_desc LIKE '%"+search+"%' ";
-			*/
 			
-			String SQL = "select * from needle";
+			
+			String SQL = "select * from gender";
 					 
 			ResultSet rs = conn.createStatement().executeQuery(SQL);
 			
 			
-			int row=0;
+			int row=0;			
+			
 			while(rs.next()) {
-				modelNeedle.addRow(new Object[0]);
+				modelGender.addRow(new Object[0]);
+				modelGender.setValueAt(rs.getString("ge_id"), row, 0);
+				modelGender.setValueAt(rs.getString("ge_desc"), row, 1);
 				
-				modelNeedle.setValueAt(rs.getString("ne_id"), row, 0);
-				modelNeedle.setValueAt(rs.getString("ne_desc"), row, 1);
+				
+				
 				row++;
 			}
-			tableNeedle.setModel(modelNeedle);
-			
-			
+			tableGender.setModel(modelGender);
 			
 
 		}catch(Exception e) {
@@ -274,10 +274,10 @@ public class FormNeedle extends JFrame {
 		
 		
 		try {
-			int totalRow = tableNeedle.getRowCount()-1;
+			int totalRow = tableGender.getRowCount()-1;
 			
 			while(totalRow > -1) {
-				modelNeedle.removeRow(totalRow);
+				modelGender.removeRow(totalRow);
 				totalRow--;
 			}
 			
@@ -285,27 +285,26 @@ public class FormNeedle extends JFrame {
 			//.trim() is remove spacing on textField
 			
 			String search = tfSearch.getText().trim();
-			String SQL = "select * from needle"
-					//**where need spacing on front
-					+ " WHERE ne_id LIKE '%"+search+"%' OR"
-					+ " ne_desc LIKE '%"+search+"%' ";
 			
-					 
+			
+			String SQL = "select * from gender"
+					
+					+ " WHERE ge_desc LIKE '%"+ search +"%' ";
+					
+				 
 			ResultSet rs = conn.createStatement().executeQuery(SQL);
 			
 			
 			int row=0;
 			while(rs.next()) {
-				modelNeedle.addRow(new Object[0]);
+				modelGender.addRow(new Object[0]);
 				
-				modelNeedle.setValueAt(rs.getString("ne_id"), row, 0);
-				modelNeedle.setValueAt(rs.getString("ne_desc"), row, 1);
+				modelGender.setValueAt(rs.getString("ge_id"), row, 0);
+				modelGender.setValueAt(rs.getString("ge_desc"), row, 1);
+				
 				row++;
 			}
-			tableNeedle.setModel(modelNeedle);
-			
-			
-			
+			tableGender.setModel(modelGender);
 
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -315,31 +314,32 @@ public class FormNeedle extends JFrame {
 	public void insert() {
 		
 		try {
-		String sql = "INSERT INTO NEEDLE VALUES (?,?,?)";
-		PreparedStatement pre = conn.prepareStatement(sql);
-		if(ne_id.getText().trim() == "" || ne_desc.getText() == "") {
+		
+		if(ge_id.getText().trim() == "") {
 			JOptionPane.showMessageDialog(
 					this,
-					"กรุณากรอกข้อมูลให้ครบ",
-					"ผลการทำงาน",
+					"�к�����",
+					"�š�÷ӧҹ",
 					JOptionPane.INFORMATION_MESSAGE);
 			return;
-		}else {
-			pre.setString(1,ne_id.getText().trim());
-			pre.setString(2,ne_desc.getText().trim());
-			pre.setString(3, "Y");
 		}
+		String sql = "INSERT INTO gender VALUES (?,?)";
+		PreparedStatement pre = conn.prepareStatement(sql);
+		pre.setString(1,ge_id.getText().trim());
+		pre.setString(2,ge_desc.getText().trim());
+		
+		
 		
 		if(pre.executeUpdate() != -1) {
 			JOptionPane.showMessageDialog(
 					this,
-					"บันทึกเรียบร้อย",
-					"ผลการทำงาน",
+					"�ѹ�֡���º����",
+					"�š�÷ӧҹ",
 					JOptionPane.INFORMATION_MESSAGE
 					);
 			showData();
-			ne_id.setText("");
-			ne_desc.setText("");
+			ge_id.setText("");
+			ge_desc.setText("");
 			
 		}
 		} catch(SQLException e){
@@ -352,28 +352,29 @@ public class FormNeedle extends JFrame {
 		
 		try {
 		
-		String sql = "UPDATE NEEDLE SET NE_ID=?," 
-				+ " ne_desc=? "
-				+ " WHERE ne_id=? " ;
+		String sql = "UPDATE gender SET ge_id=?," 
+				+ " ge_desc=? "
+				+ " WHERE ge_id=? " ;
 		PreparedStatement pre = conn.prepareStatement(sql);
 		
-		pre.setString(1,ne_id.getText().trim());
-		pre.setString(2,ne_desc.getText().trim());
-		pre.setString(3,ne_id.getText().trim());
+		pre.setString(1,ge_id.getText().trim());
+		pre.setString(2,ge_desc.getText().trim());
+		
+		pre.setString(3,ge_id.getText().trim());
 		
 		
 			if(pre.executeUpdate() != -1) {
 				JOptionPane.showMessageDialog(
 					this,
-					"แก้ไขเรียบร้อย",
-					"ผลการทำงาน",
+					"������º����",
+					"�š�÷ӧҹ",
 					JOptionPane.INFORMATION_MESSAGE
 					);
 				showData();
 				btEdit.setEnabled(true);
-				ne_id.setEditable(true);
-				ne_id.setText("");
-				ne_desc.setText("");
+				ge_id.setEditable(true);
+				ge_id.setText("");
+				ge_desc.setText("");
 			
 			}
 		} catch(SQLException e){
@@ -384,24 +385,24 @@ public class FormNeedle extends JFrame {
 	public void delete() {
 	try {
 		
-		String sql = "DELETE FROM NEEDLE" 
-				+ " WHERE ne_id=? " ;
+		String sql = "DELETE FROM gender" 
+				+ " WHERE ge_id=? " ;
 				
 		PreparedStatement pre = conn.prepareStatement(sql);
-		pre.setString(1,ne_id.getText().trim());
+		pre.setString(1,ge_id.getText().trim());
 		
 		if(pre.executeUpdate() != -1) {
 			JOptionPane.showMessageDialog(
 					this,
-					"ลบเรียบร้อย",
-					"ผลการทำงาน",
+					"ź���º����",
+					"�š�÷ӧҹ",
 					JOptionPane.INFORMATION_MESSAGE
 					);
 			showData();
 			btSave.setEnabled(true);
-			ne_id.setEditable(true);
-			ne_id.setText("");
-			ne_desc.setText("");
+			ge_id.setEditable(true);
+			ge_id.setText("");
+			ge_desc.setText("");
 			
 		}
 	} catch(SQLException e){

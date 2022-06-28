@@ -10,9 +10,11 @@ public class dbConnect {
 		try
 		{
 			Class.forName(com.mysql.cj.jdbc.Driver.class.getName());
+//			return DriverManager.getConnection("jdbc:mysql://localhost/vaccinebooking?useUnicode=true&characterEncoding=utf-8",
+//					"root","Init1234");
+//
 			return DriverManager.getConnection("jdbc:mysql://0.tcp.ap.ngrok.io:10860/vaccinebooking?useUnicode=true&characterEncoding=utf-8",
-
-                    "root","p@ssword");
+					"root","p@ssword");
 		}
 		catch(ClassNotFoundException e)
 		{

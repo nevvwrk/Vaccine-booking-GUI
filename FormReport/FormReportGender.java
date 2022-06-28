@@ -1,12 +1,35 @@
 package FormReport;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Properties;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableModel;
+
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -19,36 +42,8 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Tooltip;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.*;
-import javax.swing.*;
-
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-import javax.swing.plaf.FontUIResource;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Properties;
-import javax.swing.JFormattedTextField.AbstractFormatter;
-
-//หน้ารายงานสรุปจำนวนเข็ม
-public class FormReportNeeldeSumary extends JFrame {
-
+public class FormReportGender extends JFrame {
 	Connection conn = dbConnect.getConnection();
 	JTable tableSumDose;
 	DefaultTableModel modelSumDose;
@@ -59,7 +54,7 @@ public class FormReportNeeldeSumary extends JFrame {
 	ObservableList<PieChart.Data> data;
 	
 
-	public FormReportNeeldeSumary() {
+	public FormReportGender() {
 	
 		SetLanguage();
 		Container c = this.getContentPane();
@@ -74,7 +69,7 @@ public class FormReportNeeldeSumary extends JFrame {
 		panelNorth.setLayout(new GridLayout());
 		//panelNorth.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-		JLabel Title = new JLabel("รายงานสรุปจำนวนเข็มทั้งหมด", SwingConstants.CENTER);
+		JLabel Title = new JLabel("รายงานสรุปสัดส่วนเพศ", SwingConstants.CENTER);
 		Title.setFont(new Font("Tahoma", Font.BOLD, 18));
 		Title.setForeground(Color.BLUE);
 		panelNorth.add(Title);
@@ -163,7 +158,7 @@ public class FormReportNeeldeSumary extends JFrame {
 										{ null, null }, 
 										{ null, null }, 
 										{ null, null } };
-		String header[] = { "เข็มที่", "จำนวน" };
+		String header[] = { "เพศ", "จำนวน" };
 
 		modelSumDose = new DefaultTableModel(data, header) {
 				public boolean isCellEditable(int row, int columns) {
@@ -213,27 +208,28 @@ public class FormReportNeeldeSumary extends JFrame {
 			
 			conn = dbConnect.getConnection();
 
-			String SQL = "SELECT n.ne_desc,COUNT(*) as count"
+			String SQL = "SELECT n.ge_desc,COUNT(*) as count"
 					 + " FROM vaccine_booking as v"
-					 + " JOIN needle as n on v.ne_id = n.ne_id"
+					 + " JOIN people as p on v.pe_pid = p.pe_pid"
+					 + " JOIN gender as n on p.pe_sex = n.ge_id"
 					 + " where vb_bookingdate between '"+bookingdate1+"' and '"+bookingdate2+"' "
-					 + " GROUP BY n.ne_desc; ";
+					 + " GROUP BY n.ge_desc; ";
 
 			ResultSet rs = conn.createStatement().executeQuery(SQL);
 			
 			int row = 0;
 			while(rs.next())
 			{
-				System.out.println(rs.getString("ne_desc"));
+				System.out.println(rs.getString("ge_desc"));
 				System.out.println(rs.getString("count"));
-				data.add(new PieChart.Data(rs.getString("ne_desc"), Integer.parseInt(rs.getString("count"))));
+				data.add(new PieChart.Data(rs.getString("ge_desc"), Integer.parseInt(rs.getString("count"))));
 				row++;
 			}
 			conn.close();
 			pieChart.setPrefHeight(450);
 			pieChart.setPrefWidth(450);
 	        pieChart.setData(data);
-	        pieChart.setTitle("สรุปจำนวนเข็ม");
+	        pieChart.setTitle("สรุปสัดส่วนเพศ");
 	        pieChart.setLabelsVisible(true);
 	        Group root = new Group();
 	        root.getChildren().add(pieChart);
@@ -265,11 +261,12 @@ public class FormReportNeeldeSumary extends JFrame {
 			
 			conn = dbConnect.getConnection();
 
-			String SQL = "SELECT n.ne_desc,COUNT(*) as count"
+			String SQL = "SELECT n.ge_desc,COUNT(*) as count"
 					 + " FROM vaccine_booking as v"
-					 + " JOIN needle as n on v.ne_id = n.ne_id"
+					 + " JOIN people as p on v.pe_pid = p.pe_pid"
+					 + " JOIN gender as n on p.pe_sex = n.ge_id"
 					 + " where vb_bookingdate between '"+bookingdate1+"' and '"+bookingdate2+"' "
-					 + " GROUP BY n.ne_desc; ";
+					 + " GROUP BY n.ge_desc; ";
 			
 			ResultSet rs = conn.createStatement().executeQuery(SQL);
 
@@ -277,7 +274,7 @@ public class FormReportNeeldeSumary extends JFrame {
 			while(rs.next()) 
 			{
 				modelSumDose.addRow(new Object[0]);
-				modelSumDose.setValueAt(rs.getString("ne_desc"),row,0);
+				modelSumDose.setValueAt(rs.getString("ge_desc"),row,0);
 				modelSumDose.setValueAt(rs.getString("count"),row,1);
 
 				row++;
@@ -301,5 +298,4 @@ public class FormReportNeeldeSumary extends JFrame {
 		UIManager.put("RadioButton.font", new Font("Tahoma", Font.PLAIN, 16));
 		UIManager.put("ComboBox.font", new Font("Tahoma", Font.PLAIN, 16));
 	}
-
 }
